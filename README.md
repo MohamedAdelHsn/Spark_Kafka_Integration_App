@@ -52,7 +52,7 @@ Then Conusme these messages by SparkStreaming if use maven try this
 
   ```
  
- Then write your SparkStreaming_kafka App [go to here](https://mvnrepository.com/artifact/org.apache.spark/spark-streaming-kafka-0-10_2.12/3.1.1)
+ Then write your SparkStreaming_kafka App [go to here](https://github.com/MohamedAdelHsn/Spark_Kafka_Integration_App/blob/main/Spark_KafkaExample/MyExample.scala)
 
 
  
