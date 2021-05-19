@@ -21,6 +21,7 @@ import org.apache.hadoop.hbase.util.Bytes
 
 object StreamingData {
   
+   
   def main(args :Array[String]):Unit = {
   
   
@@ -38,7 +39,7 @@ object StreamingData {
     val ssc = new StreamingContext(conf , Seconds(10))
     
   
-    // ###################################### EXTRACT DATA FROM APACHE KAFKA  ######################################## //
+    // #######################################   EXTRACT DATA FROM APACHE KAFKA  ######################################## //
   
     val dstream = KafkaUtils.createDirectStream[String, String](
     ssc,
@@ -59,7 +60,7 @@ object StreamingData {
     }
     
     
-   // ###################################### TRANSFORM DATA USING SPARK STREAMING  ##################################################### //
+    // ######################################    TRANSFORM DATA USING SPARK STREAMING  ##################################################### //
   
 
     val streamingWordCount = dstream.map(_.value()).flatMap(_.split(" "))
@@ -72,7 +73,7 @@ object StreamingData {
     streamingWordCount.print()
     
     
-  // ############################### LOAD DATA TO APACHE HBASE ################################################### //
+  // ##########################################  LOAD DATA TO APACHE HBASE ######################################################### //
   
     
     streamingWordCount.foreachRDD(rdd => if(!rdd.isEmpty()) rdd.foreach(send2Hbase(_)))
@@ -92,16 +93,11 @@ object StreamingData {
        configuration.set("hbase.zookeeper.quorum", "localhost:2182");
        val connection = ConnectionFactory.createConnection(configuration);
         //Specify the target table
-       val table = connection.getTable(TableName.valueOf(table_name));
-              
+       val table = connection.getTable(TableName.valueOf(table_name));              
      
        val put = new Put(row._1.toString.getBytes)
-       
-       // Update with new data 
-       val newData = row._2.toInt
-       print(newData)
-            
-       put.addColumn("counts".getBytes(), "count".getBytes(), newData.toString().getBytes());
+      
+       put.addColumn("counts".getBytes(), "count".getBytes(),row._2.toString().getBytes());
        table.put(put);
       
       
