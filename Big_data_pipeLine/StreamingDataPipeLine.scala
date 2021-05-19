@@ -38,7 +38,7 @@ object StreamingData {
     val ssc = new StreamingContext(conf , Seconds(10))
     
   
-    // ####################### EXTRACT DATA FROM APACHE KAFKA  ######################### //
+    // ###################################### EXTRACT DATA FROM APACHE KAFKA  ######################################## //
   
     val dstream = KafkaUtils.createDirectStream[String, String](
     ssc,
@@ -59,7 +59,7 @@ object StreamingData {
     }
     
     
-   // ################################ TRANSFORM DATA USING SPARK STREAMING  ################################################# //
+   // ###################################### TRANSFORM DATA USING SPARK STREAMING  ##################################################### //
   
 
     val streamingWordCount = dstream.map(_.value()).flatMap(_.split(" "))
